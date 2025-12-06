@@ -23,7 +23,17 @@
 
 
 ## APK
-- [Скачать актуальный APK](build/app/outputs/flutter-apk/app-release.apk) (создается командой `flutter build apk --release`).
+APK файл находится в `build/app/outputs/flutter-apk/app-release.apk` после сборки.
+
+Собрать APK:
+```bash
+flutter build apk --release
+```
+
+После сборки APK можно установить на устройство:
+```bash
+flutter install
+```
 
 ## Запуск и разработка
 1) Установить зависимости: `flutter pub get`
