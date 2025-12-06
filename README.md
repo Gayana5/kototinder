@@ -21,12 +21,22 @@
 ![Список пород](assets/readme/breeds.png)
 
 ## APK
-- [Скачать актуальный APK](build/app/outputs/flutter-apk/app-release.apk) (создается командой `flutter build apk --release`).
+APK файл находится в `build/app/outputs/flutter-apk/app-release.apk` после сборки.
+
+Собрать APK:
+```bash
+flutter build apk --release
+```
+
+После сборки APK можно установить на устройство:
+```bash
+flutter install
+```
 
 ## Запуск и разработка
 1) Установить зависимости: `flutter pub get`
 2) (Опционально) Пересобрать иконки после правок: `flutter pub run flutter_launcher_icons`
-3) Запуск: `flutter run --dart-define=THE_CAT_API_KEY=<ключ>` (ключ не обязателен)
+3) Запуск: `flutter run --dart-define=THE_CAT_API_KEY=$THE_CAT_API_KEY`
 4) Форматирование: `dart format lib test`
 5) Статический анализ: `flutter analyze`
 
