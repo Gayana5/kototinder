@@ -16,9 +16,11 @@
 - Можно передать ключ `x-api-key` через параметр запуска: `--dart-define=THE_CAT_API_KEY=<your_key>`
 
 ## Скриншоты
-![Главный экран](assets/readme/home.png)
-![Детали котика](assets/readme/detail.png)
-![Список пород](assets/readme/breeds.png)
+<img width="742" height="509" alt="Снимок экрана 2025-12-06 в 15 17 53" src="https://github.com/user-attachments/assets/a13b099e-0ae7-4324-ac6b-c81cc88fee2f" />
+<img width="744" height="831" alt="Снимок экрана 2025-12-06 в 15 18 54" src="https://github.com/user-attachments/assets/69a7d8d2-9d55-4448-b891-bc5b54a08e9d" />
+<img width="747" height="831" alt="Снимок экрана 2025-12-06 в 15 18 26" src="https://github.com/user-attachments/assets/bacc7304-469a-4f45-9e5d-3696ac533eea" />
+<img width="731" height="742" alt="Снимок экрана 2025-12-06 в 15 18 13" src="https://github.com/user-attachments/assets/b20a89a5-2d6b-4583-8d26-8df36771bb48" />
+
 
 ## APK
 - [Скачать актуальный APK](build/app/outputs/flutter-apk/app-release.apk) (создается командой `flutter build apk --release`).
