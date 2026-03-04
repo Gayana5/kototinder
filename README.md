@@ -30,7 +30,7 @@
 
 
 ## APK (релиз)
-- Ссылка для скачивания: `assets/readme/app-release.apk`
+- Ссылка для скачивания: `https://github.com/Gayana5/kototinder/releases/download/v1.0.0/app-release.apk`
 
 Собрать APK локально:
 ```bash
