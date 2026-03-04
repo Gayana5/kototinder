@@ -1,20 +1,18 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:cat_tinder/main.dart';
+import 'package:cat_tinder/presentation/onboarding/onboarding_screen.dart';
 
 void main() {
-  testWidgets('Home tabs render', (WidgetTester tester) async {
-    await tester.pumpWidget(const CatTinderApp());
+  testWidgets('Onboarding renders key steps', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(useMaterial3: true),
+        home: OnboardingScreen(onCompleted: () async {}),
+      ),
+    );
 
-    expect(find.text('Cat Tinder'), findsWidgets);
-    expect(find.text('Котики'), findsOneWidget);
-    expect(find.text('Список пород'), findsOneWidget);
+    expect(find.text('Свайпы и лайки'), findsOneWidget);
+    expect(find.byType(PageView), findsOneWidget);
   });
 }

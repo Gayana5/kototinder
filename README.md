@@ -1,49 +1,66 @@
-# Cat Tinder
+# Кототиндер Про
 
-Мини-приложение на Flutter, которое берет случайных котиков и список пород из [TheCatAPI](https://thecatapi.com). 
+Мобильное приложение на Flutter: свайпы котиков, карточки пород, онбординг и полноценный флоу регистрации/входа. Данные о котиках берутся из TheCatAPI.
 
-## Реализованные фичи
-- Главный экран показывает случайного котика с породой и кратким описанием.
-- Свайпы влево/вправо или кнопки дизлайк/лайк меняют котика; свайп/лайк вправо увеличивает счетчик.
-- Тап по карточке открывает экран деталей с фото, описанием и 3–4 характеристиками породы.
-- Таб-бар переключает на экран «Список пород» с краткой карточкой; по тапу открывается детальный просмотр породы.
-- Диалог с сообщением об ошибке при сетевых сбоях и кнопкой «Повторить».
-- Кастомная иконка приложения + кэширование картинок через `CachedNetworkImage`.
+## Реализованные фичи (включая ДЗ-2)
+- Онбординг с горизонтальным скроллом и анимацией котика, объясняющий ключевые сценарии.
+- Регистрация и вход с валидацией, сохранением сессии и локальным хранением пароля в Keychain/Keystore через `flutter_secure_storage`.
+- Сохранение статуса авторизации и прохождения онбординга между запусками.
+- Главный экран со свайпами/лайк-дизлайк и счётчиком понравившихся.
+- Детальная карточка котика с данными породы.
+- Вкладка «Список пород» с деталями каждой породы.
+- Логирование событий регистрации/входа в AppMetrica.
 
-## API
-- Случайное изображение котика: `GET https://api.thecatapi.com/v1/images/search?limit=1&has_breeds=1`
-- Список пород: `GET https://api.thecatapi.com/v1/breeds`
-- Можно передать ключ `x-api-key` через параметр запуска: `--dart-define=THE_CAT_API_KEY=<your_key>`
+## Архитектура
+Проект переработан в слоистую структуру в духе clean architecture:
+- `Data`: источники данных и реализации репозиториев.
+- `Domain`: сущности, интерфейсы репозиториев, use-cases и валидаторы.
+- `Presentation`: экраны, контроллеры состояния, тема.
+
+Зависимости собираются централизованно в `AppDependencies` и прокидываются через DI.
 
 ## Скриншоты
-<img width="744" height="831" alt="Снимок экрана 2025-12-06 в 15 18 54" src="https://github.com/user-attachments/assets/69a7d8d2-9d55-4448-b891-bc5b54a08e9d" />
-<img width="742" height="509" alt="Снимок экрана 2025-12-06 в 15 17 53" src="https://github.com/user-attachments/assets/a13b099e-0ae7-4324-ac6b-c81cc88fee2f" />
-<img width="747" height="831" alt="Снимок экрана 2025-12-06 в 15 18 26" src="https://github.com/user-attachments/assets/bacc7304-469a-4f45-9e5d-3696ac533eea" />
-<img width="731" height="742" alt="Снимок экрана 2025-12-06 в 15 18 13" src="https://github.com/user-attachments/assets/b20a89a5-2d6b-4583-8d26-8df36771bb48" />
+Онбординг:
+![Onboarding 1](assets/readme/onboarding_1.png)
+![Onboarding 2](assets/readme/onboarding_2.png)
+![Onboarding 3](assets/readme/onboarding_3.png)
+
+Регистрация / вход:
+![Auth](assets/readme/auth.png)
 
 
-## APK
-APK файл находится в `build/app/outputs/flutter-apk/app-release.apk` после сборки.
+## APK (релиз)
+- Ссылка для скачивания: `assets/readme/app-release.apk`
 
-Собрать APK:
+Собрать APK локально:
 ```bash
-flutter build apk --release
+flutter build apk --release \
+  --dart-define=THE_CAT_API_KEY=YOUR_CAT_API_KEY \
+  --dart-define=APPMETRICA_API_KEY=YOUR_APPMETRICA_KEY
 ```
+После сборки положите файл `app-release.apk` в `assets/readme/` и обновите ссылку выше, если путь отличается.
 
-После сборки APK можно установить на устройство:
-```bash
-flutter install
-```
+## API ключи
+В коде нет явных API-ключей. Используются переменные компиляции:
+- `THE_CAT_API_KEY` — ключ TheCatAPI (опционально).
+- `APPMETRICA_API_KEY` — ключ AppMetrica для аналитики.
 
 ## Запуск и разработка
-1) Установить зависимости: `flutter pub get`
-2) (Опционально) Пересобрать иконки после правок: `flutter pub run flutter_launcher_icons`
-3) Запуск: `flutter run --dart-define=THE_CAT_API_KEY=$THE_CAT_API_KEY`
-4) Форматирование: `dart format lib test`
-5) Статический анализ: `flutter analyze`
+1. `flutter pub get`
+2. `flutter run --dart-define=THE_CAT_API_KEY=YOUR_CAT_API_KEY --dart-define=APPMETRICA_API_KEY=YOUR_APPMETRICA_KEY`
+3. `flutter analyze`
+4. `flutter test`
+
+## CI/CD
+В `.github/workflows/flutter_ci.yml` настроен пайплайн:
+- `flutter analyze`
+- `flutter test` (unit + widget)
+
+Пайплайн падает при ошибках.
 
 ## Стек
 - Flutter 3, Material 3, кастомная тема
-- `http` для запросов к TheCatAPI
-- `cached_network_image` для загрузки и кэширования картинок
-- `flutter_lints` и `analysis_options.yaml` для статического анализа
+- `http`, `cached_network_image`
+- `provider`, `shared_preferences`, `flutter_secure_storage`
+- `appmetrica_plugin` для аналитики
+- `flutter_test`, `mocktail`
